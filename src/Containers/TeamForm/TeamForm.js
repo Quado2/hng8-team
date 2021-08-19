@@ -6,6 +6,8 @@ import RollText from '../../Components/RollText/RollText'
 import Input from '../../Components/Input/Input';
 import Notification from '../../Components/Notification/Notification'
 import Backdrop from '../../Components/Backdrop/Backdrop'
+import zuriLogo from '../../images/zuri_logo.png'
+
 function TeamForm() {
     const [showSecond, setShowSecond] = useState(false)
     const [showThird, setShowThird] = useState(false)
@@ -61,7 +63,7 @@ function TeamForm() {
 
   function handleInputChange(e){
       const {name, value} = e.target
-      
+
       switch(name){
         case 'email':
               {
@@ -180,6 +182,9 @@ function TeamForm() {
              :
              null
             }
+            <div className='logo'>
+                <img src={zuriLogo} alt="zuri logo" />
+            </div>
             <form onSubmit ={handleFormSubmitted} >
                 <div className='form-top-text' disabled>
                     {showSecond? 

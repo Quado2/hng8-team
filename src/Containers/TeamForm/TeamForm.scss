@@ -11,6 +11,18 @@
     justify-content: space-between;
 
 
+    .logo{
+        width: 100%;
+        text-align: left;
+
+        img{
+            width: 100px;
+            margin: 20px;
+        }
+    }
+
+
+
     form{
         z-index: 1;
         width: 90%;
