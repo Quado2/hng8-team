@@ -61,7 +61,7 @@ function TeamForm() {
 
   function handleInputChange(e){
       const {name, value} = e.target
-      console.log(name, value)
+      
       switch(name){
         case 'email':
               {
@@ -192,7 +192,7 @@ function TeamForm() {
                 {showName? 
                     <Input  inputType='text'
                         prompt='Enter you name:' 
-                        name='name' status={nameStatus}
+                        name='name'
                         focus={nameFocus}
                         buttonDisabled={false}
                         handleInputChange={handleInputChange}
@@ -204,7 +204,7 @@ function TeamForm() {
                 {showEmail? 
                     <Input handleInputChange={handleInputChange} inputType='email'
                         prompt='Enter your email:' 
-                        name='email' status={emailStatus}
+                        name='email' 
                         focus={emailFocus}
                         handleContinueClicked={handleContinueClicked}
                     />
@@ -215,7 +215,7 @@ function TeamForm() {
                 {showPhone? 
                     <Input handleInputChange={handleInputChange} inputType='text'
                         prompt='Enter your phone Number:' 
-                        name='phone' status={phoneStatus}
+                        name='phone'
                         focus={phoneFocus}
                         handleContinueClicked={handleContinueClicked}
                         />
@@ -225,7 +225,7 @@ function TeamForm() {
                 {showGender?
                     <Input handleInputChange={handleInputChange} inputType='selectInput'
                         prompt='Select your gender'
-                        name='gender' status={genderStatus}
+                        name='gender' 
                         list={'Male,Female'}
                         showContinueButton={showGenderContinue}
                         handleContinueClicked={handleContinueClicked}
@@ -236,7 +236,7 @@ function TeamForm() {
                 {showTrack?
                     <Input handleInputChange={handleInputChange} inputType='selectInput'
                         prompt='Select your track'
-                        name='track' status={trackStatus}
+                        name='track'
                         handleContinueClicked={handleContinueClicked}
                         list={'Front End, Back end,Mobile track, DevOps, UI/UX, Entrepreneurship'}
                         showContinueButton={showTrackContinue}
@@ -248,7 +248,6 @@ function TeamForm() {
                     <Input inputType='checkBox' 
                         prompt='Select the skills you are proficient in:'
                         name='stack'
-                        status={stackStatus}
                         showContinueButton={showStacksContinue}
                         handleContinueClicked={handleContinueClicked}
                         list='HTML, CSS, Bootstrap, Node-Js, React, Vue, Go, Laravel,Pyton, Springboot, mysql, Postgres, MongoDb'
@@ -265,7 +264,7 @@ function TeamForm() {
 
             <div className='team-form-bottom'>
                 <p>
-                    By joining our team, you agree to be of good behaviour. Your mental health important, but our deadlines are even more crucial. So you have define a fine line between this program and your sanity
+                    By joining our team, you agree to be of good behaviour. Your mental is health important, but our deadlines are even more crucial. So, define a fine line between this program and your sanity, and stick to your priorities.
                 </p>
             </div>
         </div>

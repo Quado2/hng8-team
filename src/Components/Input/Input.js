@@ -69,8 +69,8 @@ function Input(props){
                             <div className='checkbox-wrapper'>
                                 {list.split(',').map((item,i)=>{
                                     return (
-                                        <div className ='checkbox-item'>
-                                            <input id={item} onChange={handleCheckBoxChange} type='checkbox' name = {name}/> <label>{item}</label>
+                                        <div key={i} className ='checkbox-item'>
+                                            <input  id={item} onChange={handleCheckBoxChange} type='checkbox' name = {name}/> <label>{item}</label>
                                         </div> 
                                     )
                                 })}
