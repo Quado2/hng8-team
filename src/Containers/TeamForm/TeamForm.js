@@ -26,9 +26,7 @@ function TeamForm() {
     const [showSubmit, setShowSubmit] = useState(false)
     const [showNotification, setShowNotification] = useState(false)
 
-    const [showEmailContinue, setShowEmailContinue] = useState(false);
-    const [showNameContinue, setShowNameContinue] = useState(false);
-    const [showPhoneContinue, setShowPhoneContinue] = useState(false);
+    
     const [showTrackContinue, setShowTrackContinue] = useState(false)
     const [showStacksContinue, setShowStacksContinue] = useState(false)
     const [showGenderContinue, setShowGenderContinue] = useState(false)
@@ -39,12 +37,7 @@ function TeamForm() {
     const [phoneFocus, setPhoneFocus] = useState(false);
     
 
-    const [nameStatus, setNameStatus] = useState('write')
-    const [emailStatus, setEmailStatus] = useState('write')
-    const [phoneStatus, setPhoneStatus] = useState('write');
-    const [genderStatus, setGenderStatus] = useState('write');
-    const [trackStatus, setTrackStatus] = useState('write');
-    const [stackStatus, setStackStatus] = useState('write');
+
 
 
 
@@ -52,9 +45,9 @@ function TeamForm() {
 
     const timer = setTimeout(() => {
       setShowSecond(true);
-      const timer2 = setTimeout(()=>{
+      setTimeout(()=>{
         setShowThird(true)
-        const timer3 = setTimeout(()=>{
+        setTimeout(()=>{
             setNameFocus(true)
             setShowName(true)
             
@@ -108,9 +101,6 @@ function TeamForm() {
       setShowGenderContinue(false)
       setShowStacksContinue(false)
       setShowTrackContinue(false)
-      setShowNameContinue(false)
-      setShowEmailContinue(false)
-      setShowPhoneContinue(false)
   }
 
    
@@ -165,7 +155,10 @@ function TeamForm() {
 
   function handleFormSubmitted(e){
       e.preventDefault();
-      console.log(name, email,stacks,phone)
+      console.log("The details has been obtained and can now be submitted")
+      console.log("Here are the details obatainer")
+      console.log(`Name: ${name} \n Email: ${email} \nPhone: ${phone}`)
+      console.log(`Gender: ${gender} \n Track: ${track} \nStacks: ${stacks}`)
       setShowNotification(true)
   }
 
