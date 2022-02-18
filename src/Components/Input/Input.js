@@ -10,7 +10,6 @@ function Input(props) {
     prompt,
     name,
     inputType,
-    validateData,
     clearAllFields,
     handleInputChange,
     handleContinueClicked,
@@ -18,35 +17,39 @@ function Input(props) {
     showErrors,
     focus,
     buttonDisabled,
-    isValidInput,
     showContinueButton,
+    rules,
   } = props;
 
-  const stacks = [];
+  const checkBoxSelectedItems = [];
   const [blured, setBlured] = useState(false);
   const [focused, setFocused] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [status, setStatus] = useState("write");
+  const [isValidInput, setIsValidInput] = useState(false);
 
   const inputRef = useRef();
 
   function handleCheckBoxChange(e) {
     const { id, checked } = e.target;
-    const index = stacks.indexOf(id);
+    const index = checkBoxSelectedItems.indexOf(id);
 
     if (checked) {
       if (index === -1) {
-        stacks.push(id);
+        checkBoxSelectedItems.push(id);
       }
     } else {
       if (index > -1) {
-        stacks.splice(index, 1);
+        checkBoxSelectedItems.splice(index, 1);
       }
     }
   }
 
+  function validateData() {
 
-  
+    console.log("We have validated the data");
+  }
+
   function handleInputFocus() {
     setFocused(true);
     setBlured(false);
@@ -62,83 +65,89 @@ function Input(props) {
 
   let inputIcon;
 
-	if (focused || (!focused && !blured)) {
-		inputIcon = (
-			<span className="write">
-				<FontAwesomeIcon icon={faLongArrowAltRight} />
-			</span>
-		);
-	}
+  if (focused || (!focused && !blured)) {
+    inputIcon = (
+      <span className="write">
+        <FontAwesomeIcon icon={faLongArrowAltRight} />
+      </span>
+    );
+  }
 
-	if (blured) {
-		if (isValidInput) {
-			inputIcon = <span className="good">✓</span>;
-		} else {
-			inputIcon = <span className="bad">✕</span>;
-		}
-	}
+  if (blured) {
+    if (isValidInput) {
+      inputIcon = <span className="good">✓</span>;
+    } else {
+      inputIcon = <span className="bad">✕</span>;
+    }
+  }
 
-	if (clearAllFields) {
-		if (inputRef.current) {
-			inputRef.current.value = "";
-		}
-	}
+  if (clearAllFields) {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }
 
+  function renderSwitch(param) {
+    switch (param) {
+      case "selectInput":
+        return (
+          <select ref={inputRef} onChange={handleInputChange} name={name}>
+            {list.split(",").map((item, i) => {
+              return (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
+        );
+        break;
+      case "checkBox":
+        return (
+          <div className="checkbox-wrapper">
+            {list.split(",").map((item, i) => {
+              return (
+                <div key={i} className="checkbox-item">
+                  <input
+                    
+                    id={item}
+                    onChange={handleCheckBoxChange}
+                    type="checkbox"
+                    name={name}
+                  />{" "}
+                  <label>{item}</label>
+                </div>
+              );
+            })}
+          </div>
+        );
+      default:
+        return (
+          <input
+            ref={inputRef}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            onBlur={handleBlur}
+            name={name}
+            autoFocus={focus}
+            type={inputType}
+          />
+        );
+    }
+  }
 
   return (
     <div className="our-input">
       <label>{prompt}</label>
       <div className="inner-our-input">
         <div className="inner-level-2">
-          {status === "good" ? <span className="good">✓</span> : null}
-          {status === "write" ? (
-            <span className="write">
-              <FontAwesomeIcon icon={faLongArrowAltRight} />
-            </span>
-          ) : null}
-          {status === "bad" ? <span className="bad">✕</span> : null}
-
-          {inputType === "selectInput" ? (
-            <select onChange={handleInputChange} name={name}>
-              {list.split(",").map((item, i) => {
-                return (
-                  <option key={i} value={item}>
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
-          ) : inputType === "checkBox" ? (
-            <div className="checkbox-wrapper">
-              {list.split(",").map((item, i) => {
-                return (
-                  <div key={i} className="checkbox-item">
-                    <input
-                      id={item}
-                      onChange={handleCheckBoxChange}
-                      type="checkbox"
-                      name={name}
-                    />{" "}
-                    <label>{item}</label>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <input
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              onBlur={handleBlur}
-              name={name}
-              autoFocus={focus}
-              type={inputType}
-            />
-          )}
+          {inputIcon}
+          {renderSwitch(inputType)}
         </div>
         {showButton || showContinueButton ? (
           <button
             disabled={buttonDisabled}
-            onClick={(e) => handleContinueClicked(e, name, stacks)}
+            onClick={(e) => handleContinueClicked(e, name, checkBoxSelectedItems)}
           >
             Continue
           </button>
