@@ -1,45 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import './TeamForm.scss'
-import OurParticles  from '../../Components/Particles/Particles'
-import RollText from '../../Components/RollText/RollText'
+import './TeamForm.scss';
+import OurParticles  from '../../Components/Particles/Particles';
+import RollText from '../../Components/RollText/RollText';
 import Input from '../../Components/Input/Input';
-import Notification from '../../Components/Notification/Notification'
-import Backdrop from '../../Components/Backdrop/Backdrop'
-import zuriLogo from '../../images/zuri_logo.png'
+import Notification from '../../Components/Notification/Notification';
+import Backdrop from '../../Components/Backdrop/Backdrop';
+import zuriLogo from '../../images/zuri_logo.png';
 
 function TeamForm() {
-    const [showSecond, setShowSecond] = useState(false)
-    const [showThird, setShowThird] = useState(false)
+    
+    const [showSecond, setShowSecond] = useState(false);
+    const [showThird, setShowThird] = useState(false);
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [track, setTrack] = useState('Front End')
-    const [stacks, setStacks] = useState([])
-    const [gender, setGender] = useState('Male')
+    const [track, setTrack] = useState('Front End');
+    const [stacks, setStacks] = useState([]);
+    const [gender, setGender] = useState('Male');
 
     const [showEmail, setShowEmail] = useState(false);
     const [showName, setShowName] = useState(false);
     const [showPhone, setShowPhone] = useState(false);
-    const [showTrack, setShowTrack] = useState(false)
-    const [showStacks, setShowStacks] = useState(false)
-    const [showGender, setShowGender] = useState(false)
-    const [showSubmit, setShowSubmit] = useState(false)
-    const [showNotification, setShowNotification] = useState(false)
+    const [showTrack, setShowTrack] = useState(false);
+    const [showStacks, setShowStacks] = useState(false);
+    const [showGender, setShowGender] = useState(false);
+    const [showSubmit, setShowSubmit] = useState(false);
+    const [showNotification, setShowNotification] = useState(false);
 
     
-    const [showTrackContinue, setShowTrackContinue] = useState(false)
-    const [showStacksContinue, setShowStacksContinue] = useState(false)
-    const [showGenderContinue, setShowGenderContinue] = useState(false)
+    const [showTrackContinue, setShowTrackContinue] = useState(false);
+    const [showStacksContinue, setShowStacksContinue] = useState(false);
+    const [showGenderContinue, setShowGenderContinue] = useState(false);
 
 
-    const [nameFocus, setNameFocus] = useState(false)
-    const [emailFocus, setEmailFocus] = useState(false)
+    const [nameFocus, setNameFocus] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
     const [phoneFocus, setPhoneFocus] = useState(false);
     
-
-
 
 
 
@@ -48,10 +47,10 @@ function TeamForm() {
     const timer = setTimeout(() => {
       setShowSecond(true);
       setTimeout(()=>{
-        setShowThird(true)
+        setShowThird(true);
         setTimeout(()=>{
-            setNameFocus(true)
-            setShowName(true)
+            setNameFocus(true);
+            setShowName(true);
             
         },1000)
       },1500)
