@@ -14,7 +14,6 @@ function Input(props) {
     clearAllFields,
     handleContinueClicked,
     rules,
-    key,
   } = props;
 
   const [blured, setBlured] = useState(false);
@@ -137,11 +136,15 @@ function Input(props) {
     }
   }
 
-  function renderSwitch(param) {
-    switch (param) {
-      case "selectInput":
-         return (
-          <select autoFocus={true} key={key} ref={inputRef} onChange={handleChange} name={name}>
+  return (
+    <div className="our-input">
+      <label>{prompt}</label>
+      <div className="inner-our-input">
+        <div className="inner-level-2">
+          {inputIcon}
+          {inputType === "selectInput" ?
+         (
+          <select autoFocus={true} ref={inputRef} onChange={handleChange} name={name}>
             {list.split(",").map((item, i) => {
               return (
                 <option key={i} value={item}>
@@ -150,10 +153,12 @@ function Input(props) {
               );
             })}
           </select>
-        );
-        break;
-      case "checkBox":
-        return (
+        )
+
+      :
+
+      inputType === "checkBox" ? 
+        (
           <div className="checkbox-wrapper">
             {list.split(",").map((item, i) => {
               return (
@@ -169,9 +174,11 @@ function Input(props) {
               );
             })}
           </div>
-        );
-      default:
-         return(
+        )
+        
+        :
+        
+        (
           <input
             ref={inputRef}
             onChange={handleChange}
@@ -181,17 +188,10 @@ function Input(props) {
             autoFocus={true}
             type={inputType}
           />
-        );
-    }
-  }
+        )}
 
-  return (
-    <div className="our-input">
-      <label>{prompt}</label>
-      <div className="inner-our-input">
-        <div className="inner-level-2">
-          {inputIcon}
-          {renderSwitch(inputType)}
+
+
         </div>
         {showButton && (
           <button
