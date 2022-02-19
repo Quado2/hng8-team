@@ -8,36 +8,30 @@ import Notification from "../../Components/Notification/Notification";
 import Backdrop from "../../Components/Backdrop/Backdrop";
 import zuriLogo from "../../images/zuri_logo.png";
 
-function GitForm({formInputs}) {
+function GitForm({ formInputs }) {
   const [showSecond, setShowSecond] = useState(false);
   const [showThird, setShowThird] = useState(false);
   const [showName, setShowName] = useState(false);
   const [showSubmit, setShowSubmit] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
-  
-  const [nameFocus, setNameFocus] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
-  const [phoneFocus, setPhoneFocus] = useState(false);
-
   const [formValues, setFormValues] = useState({});
-  const [visibleFormInputs, setVisibleFormInputs] =  useState([]);
+  const [visibleFormInputs, setVisibleFormInputs] = useState([]);
 
   useEffect(() => {
-    console.log(formInputs)
-    setVisibleFormInputs([formInputs[0]])
+    console.log(formInputs);
+    setVisibleFormInputs([formInputs[0]]);
     const timer = setTimeout(() => {
       setShowSecond(true);
       setTimeout(() => {
         setShowThird(true);
         setTimeout(() => {
-          setNameFocus(true);
           setShowName(true);
         }, 1000);
       }, 1500);
     }, 2000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [formInputs]);
 
   const handleContinueClicked = (e, name, inputValue) => {
     e.preventDefault();
@@ -94,14 +88,14 @@ function GitForm({formInputs}) {
           {showThird ? <RollText text="Let's get started" /> : null}
         </div>
 
-        {showName && visibleFormInputs &&
+        {showName &&
+          visibleFormInputs &&
           visibleFormInputs.map((formInput) => (
             <Input
               key={formInput.name}
               inputType={formInput.inputType}
               prompt={formInput.prompt}
               name={formInput.name}
-              focus={nameFocus}
               rules={formInput.rules}
               buttonDisabled={false}
               handleContinueClicked={handleContinueClicked}

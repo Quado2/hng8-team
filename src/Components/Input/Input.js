@@ -13,57 +13,36 @@ function Input(props) {
     inputType,
     clearAllFields,
     handleContinueClicked,
-    focus,
     rules,
     key,
   } = props;
 
-  
   const [blured, setBlured] = useState(false);
   const [focused, setFocused] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [status, setStatus] = useState("write");
   const [isValidInput, setIsValidInput] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
   const [inputValue, setInputValue] = useState(null);
-  const [checkBoxItems, setCheckBoxItem] = useState([])
+  const [checkBoxItems, setCheckBoxItem] = useState([]);
 
   const inputRef = useRef();
-  let checkBoxSelectedItems = [];
 
   function handleCheckBoxChange(e) {
-
     const { id, checked } = e.target;
-   
+
     const prevItems = checkBoxItems;
     const index = prevItems.indexOf(id);
-    
-    if(checked){
-        prevItems.push(id)
-        setCheckBoxItem(prevItems)
-    } else{
-        prevItems.splice(index, 1)
+
+    if (checked) {
+      prevItems.push(id);
+      setCheckBoxItem(prevItems);
+    } else {
+      prevItems.splice(index, 1);
     }
 
     setInputValue(checkBoxItems);
     validateData(checkBoxItems);
   }
-
-  let rule = {
-    maxLength: {
-      expectedValue: 20,
-      errorMessage: "Should not be more than 20 characters",
-    },
-    minLength: {
-      expectedValue: 2,
-      errorMessage: "Should not be less than 2 characters",
-    },
-    isEmail: { expectedValue: true, errorMessage: "Not a valid email address" },
-    contains: {
-      expectedValue: "@",
-      errorMessage: "Should the contain the character: '@' ",
-    },
-  };
 
   function validateData(value) {
     if (!rules) {
@@ -76,41 +55,39 @@ function Input(props) {
     Object.keys(rules).map((ruleKey) => {
       switch (ruleKey) {
         case "maxLength":
-          {
-            if (value.length > rules[ruleKey].expectedValue) {
-              setIsValidInput(false);
-              errorMessagesIn.push(rules[ruleKey].errorMessage);
-            }
+          if (value.length > rules[ruleKey].expectedValue) {
+            setIsValidInput(false);
+            errorMessagesIn.push(rules[ruleKey].errorMessage);
           }
+
           break;
 
         case "minLength":
-          {
-            if (value.length < rules[ruleKey].expectedValue) {
-              setIsValidInput(false);
-              errorMessagesIn.push(rules[ruleKey].errorMessage);
-            }
+          if (value.length < rules[ruleKey].expectedValue) {
+            setIsValidInput(false);
+            errorMessagesIn.push(rules[ruleKey].errorMessage);
           }
           break;
 
         case "contains":
-          {
-            if (!validator.contains(value, rules[ruleKey].expectedValue)) {
-              setIsValidInput(false);
-              errorMessagesIn.push(rules[ruleKey].errorMessage);
-            }
+          if (!validator.contains(value, rules[ruleKey].expectedValue)) {
+            setIsValidInput(false);
+            errorMessagesIn.push(rules[ruleKey].errorMessage);
           }
+
           break;
 
         case "isEmail":
-          {
-            if (!(validator.isEmail(value) === rules[ruleKey].expectedValue)) {
-              setIsValidInput(false);
-              errorMessagesIn.push(rules[ruleKey].errorMessage);
-            }
+          if (!(validator.isEmail(value) === rules[ruleKey].expectedValue)) {
+            setIsValidInput(false);
+            errorMessagesIn.push(rules[ruleKey].errorMessage);
           }
+
+          break;
+        default:
           break;
       }
+      return null;
     });
     setErrorMessages(errorMessagesIn);
   }
@@ -130,11 +107,10 @@ function Input(props) {
   function handleBlur(e) {
     setBlured(true);
     setFocused(false);
-    const wait = setTimeout(()=>{
-        setShowButton(false);
-    },50)
-    
-   
+    const wait = setTimeout(() => {
+      setShowButton(false);
+      clearTimeout(wait)
+    }, 50);
   }
 
   let inputIcon;
@@ -164,8 +140,8 @@ function Input(props) {
   function renderSwitch(param) {
     switch (param) {
       case "selectInput":
-        return (
-          <select key={key} ref={inputRef} onChange={handleChange} name={name}>
+         return (
+          <select autoFocus={true} key={key} ref={inputRef} onChange={handleChange} name={name}>
             {list.split(",").map((item, i) => {
               return (
                 <option key={i} value={item}>
@@ -195,14 +171,14 @@ function Input(props) {
           </div>
         );
       default:
-        return (
+         return(
           <input
             ref={inputRef}
             onChange={handleChange}
             onFocus={handleInputFocus}
             onBlur={handleBlur}
             name={name}
-            autoFocus={focus}
+            autoFocus={true}
             type={inputType}
           />
         );
@@ -229,7 +205,9 @@ function Input(props) {
       {errorMessages && (
         <div className="error-message">
           {errorMessages &&
-            errorMessages.map((errorMessage,i) => <p key={i}>{errorMessage}</p>)}
+            errorMessages.map((errorMessage, i) => (
+              <p key={i}>{errorMessage}</p>
+            ))}
         </div>
       )}
     </div>
