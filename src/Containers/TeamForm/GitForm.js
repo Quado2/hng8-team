@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import "./TeamForm.scss";
+import "./GitForm.scss";
 import OurParticles from "../../Components/Particles/Particles";
 import RollText from "../../Components/RollText/RollText";
 import Input from "../../Components/Input/Input";
