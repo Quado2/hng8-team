@@ -9,7 +9,7 @@ import Backdrop from "../../Components/Backdrop/Backdrop";
 import zuriLogo from "../../images/zuri_logo.png";
 import { formInputs } from "./data";
 
-function TeamForm() {
+function GitForm() {
   const [showSecond, setShowSecond] = useState(false);
   const [showThird, setShowThird] = useState(false);
 
@@ -146,4 +146,4 @@ function TeamForm() {
   );
 }
 
-export default TeamForm;
+export default GitForm;
