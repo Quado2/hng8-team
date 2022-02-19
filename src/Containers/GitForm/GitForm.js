@@ -6,9 +6,8 @@ import RollText from "../../Components/RollText/RollText";
 import Input from "../../Components/Input/Input";
 import Notification from "../../Components/Notification/Notification";
 import Backdrop from "../../Components/Backdrop/Backdrop";
-import zuriLogo from "../../images/zuri_logo.png";
 
-function GitForm({ formInputs }) {
+function GitForm({ formInputs, processInputs }) {
   const [showSecond, setShowSecond] = useState(false);
   const [showThird, setShowThird] = useState(false);
   const [showName, setShowName] = useState(false);
@@ -55,7 +54,7 @@ function GitForm({ formInputs }) {
 
   function handleFormSubmitted(e) {
     e.preventDefault();
-    console.log(formValues);
+    processInputs(formValues);
     setShowNotification(true);
   }
 
@@ -75,9 +74,7 @@ function GitForm({ formInputs }) {
           message={`Your Application to join us has been received, Sit back and drink water, You'll be contacted soon`}
         />
       ) : null}
-      <div className="logo">
-        <img src={zuriLogo} alt="zuri logo" />
-      </div>
+
       <form onSubmit={handleFormSubmitted}>
         <div className="form-top-text" disabled>
           {showSecond ? (
@@ -98,6 +95,7 @@ function GitForm({ formInputs }) {
               name={formInput.name}
               rules={formInput.rules}
               buttonDisabled={false}
+              list={formInput.list}
               handleContinueClicked={handleContinueClicked}
             />
           ))}

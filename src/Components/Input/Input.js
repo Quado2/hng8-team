@@ -101,6 +101,7 @@ function Input(props) {
     setFocused(true);
     setBlured(false);
     setShowButton(true);
+    console.log("focused");
   }
 
   function handleBlur(e) {
@@ -108,7 +109,7 @@ function Input(props) {
     setFocused(false);
     const wait = setTimeout(() => {
       setShowButton(false);
-      clearTimeout(wait)
+      clearTimeout(wait);
     }, 50);
   }
 
@@ -142,58 +143,54 @@ function Input(props) {
       <div className="inner-our-input">
         <div className="inner-level-2">
           {inputIcon}
-          {inputType === "selectInput" ?
-         (
-          <select autoFocus={true} ref={inputRef} onChange={handleChange} name={name}>
-            {list.split(",").map((item, i) => {
-              return (
-                <option key={i} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
-        )
 
-      :
+          {inputType === "selectInput" ? (
+            <select
+              autoFocus={true}
+              ref={inputRef}
+              onChange={handleChange}
+              name={name}
+              onFocus={handleInputFocus}
+              onBlur={handleBlur}
+            >
+              {list.split(",").map((item, i) => {
+                return (
+                  <option key={i} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          ) : inputType === "checkBox" ? (
+            <div className="checkbox-wrapper">
+              {list.split(",").map((item, i) => {
+                return (
+                  <div key={i} className="checkbox-item">
+                    <input
+                      id={item}
+                      onChange={handleCheckBoxChange}
+                      type="checkbox"
+                      name={name}
 
-      inputType === "checkBox" ? 
-        (
-          <div className="checkbox-wrapper">
-            {list.split(",").map((item, i) => {
-              return (
-                <div key={i} className="checkbox-item">
-                  <input
-                    id={item}
-                    onChange={handleCheckBoxChange}
-                    type="checkbox"
-                    name={name}
-                  />{" "}
-                  <label>{item}</label>
-                </div>
-              );
-            })}
-          </div>
-        )
-        
-        :
-        
-        (
-          <input
-            ref={inputRef}
-            onChange={handleChange}
-            onFocus={handleInputFocus}
-            onBlur={handleBlur}
-            name={name}
-            autoFocus={true}
-            type={inputType}
-          />
-        )}
-
-
-
+                    />{" "}
+                    <label>{item}</label>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <input
+              ref={inputRef}
+              onChange={handleChange}
+              onFocus={handleInputFocus}
+              onBlur={handleBlur}
+              name={name}
+              autoFocus={true}
+              type={inputType}
+            />
+          )}
         </div>
-        {showButton && (
+        {(showButton || inputType==="checkBox")&& (
           <button
             disabled={!isValidInput}
             onClick={(e) => handleContinueClicked(e, name, inputValue)}
