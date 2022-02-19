@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
+import validator from "validator";
 
 import "./Input.scss";
 import { useState, useRef } from "react";
@@ -27,6 +28,7 @@ function Input(props) {
   const [showButton, setShowButton] = useState(false);
   const [status, setStatus] = useState("write");
   const [isValidInput, setIsValidInput] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
 
   const inputRef = useRef();
 
@@ -45,8 +47,72 @@ function Input(props) {
     }
   }
 
-  function validateData() {
+  let rule = {
+    maxLength: {
+      expectedValue: 20,
+      errorMessage: "Should not be more than 20 characters",
+    },
+    minLength: {
+      expectedValue: 2,
+      errorMessage: "Should not be less than 2 characters",
+    },
+    isEmail: { expectedValue: true, errorMessage: "Not a valid email address" },
+    contains: {
+      expectedValue: "@",
+      errorMessage: "Should the contain the character: '@' ",
+    },
+  };
 
+  function validateData(e) {
+    if (!rule) {
+      setIsValidInput(true);
+      return;
+    }
+
+    const value = e.target.value;
+
+    let errorMessagesIn = [];
+    setIsValidInput(true);
+    Object.keys(rule).map((ruleKey) => {
+      switch (ruleKey) {
+        case "maxLength":
+          {
+            if (value.length > rule[ruleKey].expectedValue) {
+              setIsValidInput(false);
+              errorMessagesIn.push(rule[ruleKey].errorMessage);
+            }
+          }
+          break;
+
+        case "minLength":
+          {
+            if (value.length < rule[ruleKey].expectedValue) {
+              setIsValidInput(false);
+              errorMessagesIn.push(rule[ruleKey].errorMessage);
+            }
+          }
+          break;
+
+        case "contains":
+          {
+            if (!validator.contains(value, rule[ruleKey].expectedValue)) {
+              setIsValidInput(false);
+              errorMessagesIn.push(rule[ruleKey].errorMessage);
+            }
+          }
+          break;
+
+        case "isEmail":
+          {
+            if (!(validator.isEmail(value) === rule[ruleKey].expectedValue)) {
+              setIsValidInput(false);
+              errorMessagesIn.push(rule[ruleKey].errorMessage);
+            }
+          }
+          break;
+      }
+    });
+    setErrorMessages(errorMessagesIn);
     console.log("We have validated the data");
   }
 
@@ -56,8 +122,8 @@ function Input(props) {
     setShowButton(true);
   }
 
-  function handleBlur() {
-    validateData();
+  function handleBlur(e) {
+    validateData(e);
     setBlured(true);
     setFocused(false);
     setShowButton(false);
@@ -109,7 +175,6 @@ function Input(props) {
               return (
                 <div key={i} className="checkbox-item">
                   <input
-                    
                     id={item}
                     onChange={handleCheckBoxChange}
                     type="checkbox"
@@ -144,14 +209,21 @@ function Input(props) {
           {inputIcon}
           {renderSwitch(inputType)}
         </div>
-        {showButton || showContinueButton ? (
+        {(showButton || showContinueButton) && (
           <button
-            disabled={buttonDisabled}
-            onClick={(e) => handleContinueClicked(e, name, checkBoxSelectedItems)}
+            disabled={isValidInput}
+            onClick={(e) =>
+              handleContinueClicked(e, name, checkBoxSelectedItems)
+            }
           >
             Continue
           </button>
-        ) : null}
+        )}
+      </div>
+
+      <div className="error-message">
+        {errorMessages &&
+          errorMessages.map((errorMessage) => <p>{errorMessage}</p>)}
       </div>
     </div>
   );
