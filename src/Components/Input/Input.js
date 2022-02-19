@@ -13,11 +13,7 @@ function Input(props) {
     inputType,
     clearAllFields,
     handleContinueClicked,
-    errorMessage,
-    showErrors,
     focus,
-    buttonDisabled,
-    showContinueButton,
     rules,
     key,
   } = props;

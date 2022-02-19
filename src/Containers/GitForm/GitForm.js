@@ -7,9 +7,8 @@ import Input from "../../Components/Input/Input";
 import Notification from "../../Components/Notification/Notification";
 import Backdrop from "../../Components/Backdrop/Backdrop";
 import zuriLogo from "../../images/zuri_logo.png";
-import { formInputs } from "./data";
 
-function GitForm() {
+function GitForm({formInputs}) {
   const [showSecond, setShowSecond] = useState(false);
   const [showThird, setShowThird] = useState(false);
   const [showName, setShowName] = useState(false);
@@ -22,9 +21,11 @@ function GitForm() {
   const [phoneFocus, setPhoneFocus] = useState(false);
 
   const [formValues, setFormValues] = useState({});
-  const [visibleFormInputs, setVisibleFormInputs] = useState([formInputs[0]]);
+  const [visibleFormInputs, setVisibleFormInputs] =  useState([]);
 
   useEffect(() => {
+    console.log(formInputs)
+    setVisibleFormInputs([formInputs[0]])
     const timer = setTimeout(() => {
       setShowSecond(true);
       setTimeout(() => {
@@ -93,7 +94,7 @@ function GitForm() {
           {showThird ? <RollText text="Let's get started" /> : null}
         </div>
 
-        {showName &&
+        {showName && visibleFormInputs &&
           visibleFormInputs.map((formInput) => (
             <Input
               key={formInput.name}
