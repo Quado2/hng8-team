@@ -12,27 +12,11 @@ import { formInputs } from "./data";
 function GitForm() {
   const [showSecond, setShowSecond] = useState(false);
   const [showThird, setShowThird] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [track, setTrack] = useState("Front End");
-  const [stacks, setStacks] = useState([]);
-  const [gender, setGender] = useState("Male");
-
-  const [showEmail, setShowEmail] = useState(false);
   const [showName, setShowName] = useState(false);
-  const [showPhone, setShowPhone] = useState(false);
-  const [showTrack, setShowTrack] = useState(false);
-  const [showStacks, setShowStacks] = useState(false);
-  const [showGender, setShowGender] = useState(false);
   const [showSubmit, setShowSubmit] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
-  const [showTrackContinue, setShowTrackContinue] = useState(false);
-  const [showStacksContinue, setShowStacksContinue] = useState(false);
-  const [showGenderContinue, setShowGenderContinue] = useState(false);
-
+  
   const [nameFocus, setNameFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
   const [phoneFocus, setPhoneFocus] = useState(false);
@@ -53,12 +37,6 @@ function GitForm() {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-
-  function turnOffAllShowButton() {
-    setShowGenderContinue(false);
-    setShowStacksContinue(false);
-    setShowTrackContinue(false);
-  }
 
   const handleContinueClicked = (e, name, inputValue) => {
     e.preventDefault();
@@ -99,7 +77,7 @@ function GitForm() {
         <Notification
           handleOkClicked={handleOkClicked}
           title="Application Received"
-          message={`Your Application to join us has been received ${name}, Sit back and drink water, You'll be contacted soon`}
+          message={`Your Application to join us has been received, Sit back and drink water, You'll be contacted soon`}
         />
       ) : null}
       <div className="logo">

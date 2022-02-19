@@ -70,7 +70,7 @@ function App() {
 
   return (
   <div className={`App`}>
-      <GitForm />
+      <GitForm formInputs={formInputs}/>
     </div>
   );
 }
