@@ -1,0 +1,61 @@
+ // (
+         <Input
+        //     inputType="text"
+        //     prompt="Enter you name:"
+        //     name="name"
+        //     focus={nameFocus}
+        //     buttonDisabled={false}
+        //     handleContinueClicked={handleContinueClicked}
+        //   />
+        // ) : null}
+        // {showEmail ? (
+        //   <Input
+        //     inputType="email"
+        //     prompt="Enter your email:"
+        //     name="email"
+        //     focus={emailFocus}
+        //     handleContinueClicked={handleContinueClicked}
+        //   />
+        // ) : null}
+
+        // {showPhone ? (
+        //   <Input
+        //     inputType="text"
+        //     prompt="Enter your phone Number:"
+        //     name="phone"
+        //     focus={phoneFocus}
+        //     handleContinueClicked={handleContinueClicked}
+        //   />
+        // ) : null}
+        // {showGender ? (
+        //   <Input
+        //     inputType="selectInput"
+        //     prompt="Select your gender"
+        //     name="gender"
+        //     list={"Male,Female"}
+        //     showContinueButton={showGenderContinue}
+        //     handleContinueClicked={handleContinueClicked}
+        //   />
+        // ) : null}
+        // {showTrack ? (
+        //   <Input
+        //     inputType="selectInput"
+        //     prompt="Select your track"
+        //     name="track"
+        //     handleContinueClicked={handleContinueClicked}
+        //     list={
+        //       "Front End, Back end,Mobile track, DevOps, UI/UX, Entrepreneurship"
+        //     }
+        //     showContinueButton={showTrackContinue}
+        //   />
+        // ) : null}
+        // {showStacks ? (
+        //   <Input
+        //     inputType="checkBox"
+        //     prompt="Select the skills you are proficient in:"
+        //     name="stack"
+        //     showContinueButton={showStacksContinue}
+        //     handleContinueClicked={handleContinueClicked}
+        //     list="HTML, CSS, Bootstrap, Node-Js, React, Vue, Go, Laravel,Pyton, Springboot, mysql, Postgres, MongoDb"
+        //   />
+        // ) : null}

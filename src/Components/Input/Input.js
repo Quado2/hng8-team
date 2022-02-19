@@ -12,7 +12,6 @@ function Input(props) {
     name,
     inputType,
     clearAllFields,
-    handleInputChange,
     handleContinueClicked,
     errorMessage,
     showErrors,
@@ -20,31 +19,38 @@ function Input(props) {
     buttonDisabled,
     showContinueButton,
     rules,
+    key,
   } = props;
 
-  const checkBoxSelectedItems = [];
+  
   const [blured, setBlured] = useState(false);
   const [focused, setFocused] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [status, setStatus] = useState("write");
   const [isValidInput, setIsValidInput] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
+  const [inputValue, setInputValue] = useState(null);
+  const [checkBoxItems, setCheckBoxItem] = useState([])
 
   const inputRef = useRef();
+  let checkBoxSelectedItems = [];
 
   function handleCheckBoxChange(e) {
-    const { id, checked } = e.target;
-    const index = checkBoxSelectedItems.indexOf(id);
 
-    if (checked) {
-      if (index === -1) {
-        checkBoxSelectedItems.push(id);
-      }
-    } else {
-      if (index > -1) {
-        checkBoxSelectedItems.splice(index, 1);
-      }
+    const { id, checked } = e.target;
+   
+    const prevItems = checkBoxItems;
+    const index = prevItems.indexOf(id);
+    
+    if(checked){
+        prevItems.push(id)
+        setCheckBoxItem(prevItems)
+    } else{
+        prevItems.splice(index, 1)
     }
+
+    setInputValue(checkBoxItems);
+    validateData(checkBoxItems);
   }
 
   let rule = {
@@ -63,57 +69,60 @@ function Input(props) {
     },
   };
 
-  function validateData(e) {
-    if (!rule) {
+  function validateData(value) {
+    if (!rules) {
       setIsValidInput(true);
       return;
     }
 
-    const value = e.target.value;
-
     let errorMessagesIn = [];
     setIsValidInput(true);
-    Object.keys(rule).map((ruleKey) => {
+    Object.keys(rules).map((ruleKey) => {
       switch (ruleKey) {
         case "maxLength":
           {
-            if (value.length > rule[ruleKey].expectedValue) {
+            if (value.length > rules[ruleKey].expectedValue) {
               setIsValidInput(false);
-              errorMessagesIn.push(rule[ruleKey].errorMessage);
+              errorMessagesIn.push(rules[ruleKey].errorMessage);
             }
           }
           break;
 
         case "minLength":
           {
-            if (value.length < rule[ruleKey].expectedValue) {
+            if (value.length < rules[ruleKey].expectedValue) {
               setIsValidInput(false);
-              errorMessagesIn.push(rule[ruleKey].errorMessage);
+              errorMessagesIn.push(rules[ruleKey].errorMessage);
             }
           }
           break;
 
         case "contains":
           {
-            if (!validator.contains(value, rule[ruleKey].expectedValue)) {
+            if (!validator.contains(value, rules[ruleKey].expectedValue)) {
               setIsValidInput(false);
-              errorMessagesIn.push(rule[ruleKey].errorMessage);
+              errorMessagesIn.push(rules[ruleKey].errorMessage);
             }
           }
           break;
 
         case "isEmail":
           {
-            if (!(validator.isEmail(value) === rule[ruleKey].expectedValue)) {
+            if (!(validator.isEmail(value) === rules[ruleKey].expectedValue)) {
               setIsValidInput(false);
-              errorMessagesIn.push(rule[ruleKey].errorMessage);
+              errorMessagesIn.push(rules[ruleKey].errorMessage);
             }
           }
           break;
       }
     });
     setErrorMessages(errorMessagesIn);
-    console.log("We have validated the data");
+  }
+
+  function handleChange(e) {
+    const value = e.target.value;
+    validateData(value);
+    setInputValue(e.target.value);
   }
 
   function handleInputFocus() {
@@ -123,10 +132,13 @@ function Input(props) {
   }
 
   function handleBlur(e) {
-    validateData(e);
     setBlured(true);
     setFocused(false);
-    setShowButton(false);
+    const wait = setTimeout(()=>{
+        setShowButton(false);
+    },50)
+    
+   
   }
 
   let inputIcon;
@@ -157,7 +169,7 @@ function Input(props) {
     switch (param) {
       case "selectInput":
         return (
-          <select ref={inputRef} onChange={handleInputChange} name={name}>
+          <select key={key} ref={inputRef} onChange={handleChange} name={name}>
             {list.split(",").map((item, i) => {
               return (
                 <option key={i} value={item}>
@@ -190,7 +202,7 @@ function Input(props) {
         return (
           <input
             ref={inputRef}
-            onChange={handleInputChange}
+            onChange={handleChange}
             onFocus={handleInputFocus}
             onBlur={handleBlur}
             name={name}
@@ -209,22 +221,21 @@ function Input(props) {
           {inputIcon}
           {renderSwitch(inputType)}
         </div>
-        {(showButton || showContinueButton) && (
+        {showButton && (
           <button
-            disabled={isValidInput}
-            onClick={(e) =>
-              handleContinueClicked(e, name, checkBoxSelectedItems)
-            }
+            disabled={!isValidInput}
+            onClick={(e) => handleContinueClicked(e, name, inputValue)}
           >
             Continue
           </button>
         )}
       </div>
-
-      <div className="error-message">
-        {errorMessages &&
-          errorMessages.map((errorMessage) => <p>{errorMessage}</p>)}
-      </div>
+      {errorMessages && (
+        <div className="error-message">
+          {errorMessages &&
+            errorMessages.map((errorMessage,i) => <p key={i}>{errorMessage}</p>)}
+        </div>
+      )}
     </div>
   );
 }
