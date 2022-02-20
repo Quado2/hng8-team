@@ -18,7 +18,6 @@ function GitForm({ formInputs, processInputs }) {
   const [visibleFormInputs, setVisibleFormInputs] = useState([]);
 
   useEffect(() => {
-    console.log(formInputs);
     setVisibleFormInputs([formInputs[0]]);
     const timer = setTimeout(() => {
       setShowSecond(true);
@@ -34,8 +33,6 @@ function GitForm({ formInputs, processInputs }) {
 
   const handleContinueClicked = (e, name, inputValue) => {
     e.preventDefault();
-    console.log(name, inputValue);
-    console.log(formInputs.length, visibleFormInputs.length);
     setFormValues((prevValue) => {
       return {
         ...prevValue,

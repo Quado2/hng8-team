@@ -23,14 +23,14 @@ function Input(props) {
   const [errorMessages, setErrorMessages] = useState([]);
   const [inputValue, setInputValue] = useState(null);
   const [checkBoxItems, setCheckBoxItem] = useState([]);
-
+  const [showCheckContinue, setShowCheckContinue] = useState(false);
   const inputRef = useRef();
 
   function handleCheckBoxChange(e) {
     const { id, checked } = e.target;
-
     const prevItems = checkBoxItems;
     const index = prevItems.indexOf(id);
+    setShowCheckContinue(true);
 
     if (checked) {
       prevItems.push(id);
@@ -41,6 +41,12 @@ function Input(props) {
 
     setInputValue(checkBoxItems);
     validateData(checkBoxItems);
+  }
+
+  function handleCheckContinueClicked(e, name1, inputValue1) {
+    setShowCheckContinue(false);
+    handleContinueClicked(e, name1, inputValue1);
+    
   }
 
   function validateData(value) {
@@ -171,7 +177,6 @@ function Input(props) {
                       onChange={handleCheckBoxChange}
                       type="checkbox"
                       name={name}
-
                     />{" "}
                     <label>{item}</label>
                   </div>
@@ -190,10 +195,19 @@ function Input(props) {
             />
           )}
         </div>
-        {(showButton || inputType==="checkBox")&& (
+        {showButton  && (
           <button
             disabled={!isValidInput}
             onClick={(e) => handleContinueClicked(e, name, inputValue)}
+          >
+            Continue
+          </button>
+        )}
+
+        {showCheckContinue && (
+          <button
+            disabled={!isValidInput}
+            onClick={(e) => handleCheckContinueClicked(e, name, inputValue)}
           >
             Continue
           </button>
